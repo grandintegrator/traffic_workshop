@@ -2,7 +2,7 @@ sources:
   my-bigquery-source:
     kind: bigquery
     project: ajmalaziz-814-20250326021733
-    location: us-central1
+    location: us
 
 tools:
   get_toll_records_by_plate_number:
@@ -13,8 +13,9 @@ tools:
       - name: plate_number
         type: string
         description: The license plate number.
+        default: NJL-694
     statement: |-
-      select * from ajmalaziz-814-20250326021733.plate_reader.toll_records
+      select * from ajmalaziz-814-20250326021733.tolls.toll_records
       where plate_number = @plate_number;
 
   get_vehicle_count_by_type:
@@ -23,16 +24,16 @@ tools:
     description: Get the count of vehicles by type for a given time interval.
     parameters:
       - name: start_timestamp
-        type: timestamp
+        type: string
         description: The start of the time interval (e.g., '2023-01-01 00:00:00 UTC').
       - name: end_timestamp
-        type: timestamp
+        type: string 
         description: The end of the time interval (e.g., '2023-01-31 23:59:59 UTC').
     statement: |-
       select
         vehicle_type,
         count(record_id) as vehicle_count
-      from ajmalaziz-814-20250326021733.plate_reader.toll_records
+      from ajmalaziz-814-20250326021733.tolls.toll_records
       where timestamp between @start_timestamp and @end_timestamp
       group by vehicle_type;
 

@@ -8,8 +8,8 @@ import uuid
 
 # --- Configuration ---
 project_id = "ajmalaziz-814-20250326021733"
-region = "us-central1"
-dataset_id = "plate_reader"
+region = "us"
+dataset_id = "tolls"
 
 # Table name for the number plate reader system
 TABLES = {
@@ -59,18 +59,20 @@ def generate_timestamp(start_date, end_date):
     random_seconds = random.uniform(0, seconds_between_dates)
     return (start_date + timedelta(seconds=random_seconds)).replace(tzinfo=timezone.utc)
 
-def generate_date_range(days_back=30):
+def generate_date_range(start_datetime=None, end_datetime=None, days_back=30):
     """Generate start and end dates for data generation."""
+    if start_datetime and end_datetime:
+        return start_datetime, end_datetime
     end_date = datetime.now()
     start_date = end_date - timedelta(days=days_back)
     return start_date, end_date
 
 # --- Data Generation Functions ---
 
-def generate_toll_records_data(num_records):
+def generate_toll_records_data(num_records, start_datetime=None, end_datetime=None):
     """Generate synthetic toll record data."""
     data = []
-    start_date, end_date = generate_date_range(30)
+    start_date, end_date = generate_date_range(start_datetime=start_datetime, end_datetime=end_datetime)
     
     for _ in range(num_records):
         record_id = generate_uuid()
@@ -166,7 +168,10 @@ if __name__ == "__main__":
         
         # 1. Generate toll records
         print("Generating toll records data...")
-        toll_records_data = generate_toll_records_data(random.randint(500, 1000))
+        target_date = datetime(2025, 10, 19)
+        start_of_day = datetime(target_date.year, target_date.month, target_date.day, 8, 0, 0, tzinfo=timezone.utc)
+        end_of_day = datetime(target_date.year, target_date.month, target_date.day, 20, 0, 0, tzinfo=timezone.utc)
+        toll_records_data = generate_toll_records_data(100, start_datetime=start_of_day, end_datetime=end_of_day)
         insert_data_into_table(client, dataset_id, TABLES['toll_records'], toll_records_data)
 
         print("\n=== Number plate reader data generation completed successfully! ===")

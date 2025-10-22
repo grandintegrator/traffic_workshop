@@ -24,7 +24,7 @@ from google.adk.agents import Agent
 from toolbox_core import ToolboxSyncClient
 
 toolbox = ToolboxSyncClient("http://127.0.0.1:5000")
-mcp_tools = toolbox.load_toolset('tolls-toolset')
+mcp_tools = toolbox.load_toolset('plate_reader_toolset')
 
 
 cctv_analysis_agent = LlmAgent(
@@ -50,7 +50,7 @@ internal_research_executor = LlmAgent(
     name="internal_research_executor",
     description="Executes comprehensive safety investigation research using database research.",
     instruction=RESEARCH_EXECUTOR_PROMPT,
-    tools=[mcp_tools],
+    tools=mcp_tools,
     output_key="research_findings"
 )
 
@@ -91,3 +91,4 @@ interactive_planner_agent = LlmAgent(
     output_key="research_plan",
 )
 
+root_agent = interactive_planner_agent
