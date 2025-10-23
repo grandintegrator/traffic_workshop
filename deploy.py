@@ -19,9 +19,9 @@ load_dotenv()
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
-GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
-STAGING_BUCKET = os.getenv("GOOGLE_CLOUD_STORAGE_BUCKET")
+GOOGLE_CLOUD_PROJECT = "ajmalaziz-814-20250326021733"
+GOOGLE_CLOUD_LOCATION = "us-central1"
+STAGING_BUCKET = "gs://transport-agent"
 
 ENV_FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".env"))
 

@@ -10,21 +10,18 @@ from .prompts import (
     PLAN_GENERATOR_PROMPT,
     REPORT_COMPOSER_PROMPT
 )
+from .tools import (
+    get_vehicle_count_by_type,
+    get_toll_records_by_plate_number
+)
 
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.tools import load_artifacts
-from .models import InvestigationFeedback
-from google.adk.planners import BuiltInPlanner
-from google.genai import types as genai_types
-from typing import AsyncGenerator
-from google.adk.events import Event, EventActions
-from google.adk.agents.invocation_context import InvocationContext
-from google.adk.agents import Agent
 
-from toolbox_core import ToolboxSyncClient
+# from toolbox_core import ToolboxSyncClient
 
-toolbox = ToolboxSyncClient("http://127.0.0.1:5000")
-mcp_tools = toolbox.load_toolset('plate_reader_toolset')
+# toolbox = ToolboxSyncClient("http://127.0.0.1:5000")
+# mcp_tools = toolbox.load_toolset('plate_reader_toolset')
 
 
 cctv_analysis_agent = LlmAgent(
@@ -50,7 +47,7 @@ internal_research_executor = LlmAgent(
     name="internal_research_executor",
     description="Executes comprehensive safety investigation research using database research.",
     instruction=RESEARCH_EXECUTOR_PROMPT,
-    tools=mcp_tools,
+    tools=[get_toll_records_by_plate_number, get_vehicle_count_by_type],
     output_key="research_findings"
 )
 

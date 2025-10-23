@@ -1,6 +1,6 @@
 # Required variables
 export PROJECT_ID="ajmalaziz-814-20250326021733"
-export APP_ID="pricing_agent_team_1752796033477"
+export APP_ID="transurban_1750634167531"
 export DISPLAY_NAME="Traffic Investigator Agent"
 export DESCRIPTION="Supports with investigating traffic incidents"
 export ICON_URI="https://i.pinimg.com/564x/b3/e0/94/b3e09489dcad03b0cd7c3547720c2573.jpg"
@@ -24,7 +24,7 @@ curl -X POST \
                 "tool_description": "'"${TOOL_DESCRIPTION}"'"
             },
             "provisioned_reasoning_engine": {
-                "reasoning_engine": "..."
+                "reasoning_engine": "projects/812402096883/locations/us-central1/reasoningEngines/4485783140954013696"
             }
         }
     }'
